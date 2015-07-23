@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+
+    <div id="page_wrapper">
+        <header>
+            <nav id="mainNavbarContainer">
+                <div id="logoContainer">
+                    <a href="/Home/Index" id="logo"><img src="~/Content/ASP.NET.png" /></a>
+                </div>
+                <ul id="mainNavbar">                    
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a href="#">@User.Identity.Name</a>
+                                <ul>
+                                    <li>@Html.ActionLink("Exit", "LogOff", "Account", null, new { @class = "log_off" })</li>
+                                </ul>
+                            }
+                        </li>
+                    }
+                    else
+                    {
+                        <li><a href="/Account/Registration">Registration</a></li>
+                        <li><a class="login_link" href="/Account/Login">Login</a></li>
+                    }
+                </ul>
+            </nav>
+        </header>
+
+        <section class="login_form_container">
+            <div class="login_form_container">
+                @Html.Partial("LoginForm")
+            </div>
+        </section>
+
+        <section class="horizontal_menu">
+            <nav class="horizontal_menu">
+                <ul>
+                    <li><a href="#">Products & Services</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="/Home/AboutUs">About us</a></li>
+                </ul>
+            </nav>
+        </section>
+
+        <div>
+            <nav id="leftNavContainer">
+                <ul id="leftNavbar">
+                    <li><a href="#">Products & Services</a></li>
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">About Us</a></li>
+                </ul>
+            </nav>
+            <article>
+                @RenderBody()
+            </article>
+        </div>
+    </div>
+    <footer>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/JavaScript.js"></script>
+    <script src="~/Scripts/Templates.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

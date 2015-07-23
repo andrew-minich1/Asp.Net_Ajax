@@ -1,0 +1,11 @@
+﻿@model List<ReadJsonFile.Models.Comment>
+
+<div id="newComments">
+    @foreach (var comment in Model)
+    {
+        <div class="comment">
+            <div class="commentText"> @comment.Text </div>
+            <div class="commentUserName"> @comment.UserName </div>
+        </div>
+    }
+</div>

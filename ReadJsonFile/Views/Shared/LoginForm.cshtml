@@ -1,0 +1,42 @@
+﻿@*@model ReadJsonFile.Models.LoginViewModel*@
+<div class="login">
+    <h1>Login</h1>
+    @using (Html.BeginForm("Login", "Account", new RouteValueDictionary {{ "returnUrl" , @ViewBag.ReturnUrl }}, FormMethod.Post, new Dictionary<string, object> { { "data-toggle", "validator" }, { "class", "login_form" } }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div>
+            <p>
+                @Html.TextBox("Login", null, new { @class = "form-control", @placeholder = "Enter login" })
+            </p>
+            <p>
+                @Html.ValidationMessage("Login")
+            </p>
+        </div>
+        <div>
+            <p>
+                @Html.TextBox("Password", null, new { @class = "form-control", @placeholder = "Enter password", @type = "password" })
+            </p>
+            <p>
+                @Html.ValidationMessage("Password")
+            </p>
+        </div>
+
+        <div>
+            <p class="remember_me">
+                <label>
+                    @Html.CheckBox("RememberMe")
+                    Remember me
+                </label>
+            </p>
+            <p class="login_form_controls">
+                <button type="submit" class="btn btn-default">
+                    Sign in
+                </button>
+                <button type="reset" class="btn btn-default">
+                    Reset
+                </button>
+            </p>
+        </div>
+    }
+</div>

@@ -1,0 +1,75 @@
+﻿@model ReadJsonFile.Models.CommentViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Comments</h2>
+
+<div>
+    <div id="productCommentsContainer">
+        @foreach (var comment in Model.Comments)
+        {
+            <div class="comment">
+                <div class="commentText"> @comment.Text </div>
+                <div class="commentUserName"> @comment.UserName </div>
+            </div>
+        }
+    </div>
+
+    <div id="paging">
+        @if (Model.Pages[0] != 0)
+        {
+            @Html.ActionLink(Model.Pages[0].ToString(), "LoadComments", "Home", new { pageNumber = Model.Pages[0] }, new { @class = "btn btn-default pageNumber" })
+            @:...
+        }
+        @for (int i = 1; i < Model.Pages.Length - 1; i++)
+        {
+            if (Model.Pages[i] == 0) { return; }
+            @Html.ActionLink(Model.Pages[i].ToString(), "LoadComments", "Home", new { pageNumber = Model.Pages[i] }, new { @class = "btn btn-default pageNumber" })
+        }
+        @if (Model.Pages[Model.Pages.Length - 1] != 0)
+        {
+            @:...
+            @Html.ActionLink(Model.Pages[Model.Pages.Length - 1].ToString(), "LoadComments", "Home", new { pageNumber = Model.Pages[Model.Pages.Length - 1] }, new { @class = "btn btn-default pageNumber" })
+        }
+    </div>
+</div>
+
+
+<h3>Add new comment</h3>
+<div id="addNewcCommentFormContainer">
+    @using (Html.BeginForm("AddComment", "Home", FormMethod.Post, new {@class = "add_comment_form" }))
+    {
+        <div>
+            <textarea class="textarea" rows="3" name="Text" id="comment" placeholder="Message"></textarea>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-default" id="addCommentButton">Send a message</button>
+        </div>
+    }
+</div>
+
+@Html.Action("GetComments", "Home")
+
+
+<script id="showComment" type="text/x-jQuery-tmpl">
+    <div class="comment col-md-12">
+        <div class="commentText"> ${Text}</div>
+        <div class="commentUserName"> ${UserName}</div>
+    </div>
+</script>
+
+<script id="showPaging" type="text/x-jQuery-tmpl">
+    {{each(i,v) Pages}}
+    {{if i==Pages.length-1 && v != 0}}
+    ...
+    {{/if}}
+    {{if v != 0}}
+    <a href="/Home/LoadComments?pageNumber=${v}" class="btn btn-default pageNumber">${v}</a>
+    {{/if}}
+    {{if i==0 && v != 0}}
+    ...
+    {{/if}}
+    {{/each}}
+</script>
